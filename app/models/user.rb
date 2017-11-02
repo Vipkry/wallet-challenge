@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+	has_one :user_wallet
 
 	has_secure_password
 

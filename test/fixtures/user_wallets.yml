@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  custom_limit: 9.99
+  user_id: 1
+  limit: 9.99
+
+two:
+  custom_limit: 9.99
+  user_id: 1
+  limit: 9.99

@@ -4,10 +4,11 @@ API em Rails de um sistema de gerenciamento de cartões de crédito
 Ruby version: 2.4.0
 Rails version: 5.1.4
 
+Heroku url: TODO
+
 Testes: GREEN
 
 # Como usar
-	heroku url: TODO
 
 	Execute localmente usando 'rails server', verifique a porta que o servidor vai utilizar (3000 se você não tiver feito nenhuma alteração) e você pode acessar por localhost:3000/ (mantive a página padrão "You're on rails")
 

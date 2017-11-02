@@ -10,6 +10,14 @@ class UserControllerTest < ActionDispatch::IntegrationTest
     assert_response 201
   end
 
+  test "should have a wallet" do
+    post user_create_url, params: {user: { name: 'Kerrigan', password: '1234567890', id_nat: '12345678900' }}
+
+    wallet_id = User.last.user_wallet.id
+
+    assert_not_nil wallet_id
+  end
+
   test "return unprocessable entity upon error" do
     # password souln't be blank
   	post user_create_url, params: {user: { name: 'Kerrigan', password: '', id_nat: '17915160419' }}

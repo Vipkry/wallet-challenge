@@ -1,0 +1,2 @@
+class UserWalletController < ApplicationController
+end

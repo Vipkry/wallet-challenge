@@ -5,6 +5,8 @@ class UserController < ApplicationController
   	@user = User.new(user_params)
   	if @user.save
   	  @user.password_digest = "not-shown"
+      wallet = UserWallet.new(:user_id => @user.id)
+      wallet.save!
       render json: @user, status: 201
     else
       render json: @user.errors, status: 422
@@ -13,7 +15,6 @@ class UserController < ApplicationController
 
   # POST /user/login
   def login
-  	#TODO -> implement token based login
   	user = User.find_by(:id_nat => params[:id_nat])
   	if user && user.authenticate(params[:password])
   		@token = User.new_token
