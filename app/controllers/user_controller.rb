@@ -17,11 +17,16 @@ class UserController < ApplicationController
     end
   end
 
-  # GET /user/login
+  # POST /user/login
   def login
   	#TODO -> implement token based login
-  	@token = User.new_token
-  	render json: @token
+  	user = User.find_by(:id_nat => params[:id_nat])
+  	if user && user.authenticate(params[:password])
+  		@token = User.new_token
+  	    render json: @token, status: 200
+  	else
+   		render json: nil , status: 401
+  	end
   end
 
   private

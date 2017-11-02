@@ -14,8 +14,6 @@ Lembre-se que cada compra é feita em apenas um cartão, então manter um cartã
 Somente no caso em que não for possível fazer a compra em um único cartão, o sistema deve dividir a compra em mais cartões.
 Para isso, você vai preenchendo os cartões usando as mesmas ordens de prioridade já descritas.
 Ou seja, você gasta primeiro do cartão que está mais longe de vencer e "completa" com o próximo cartão mais longe de vencer.
-Caso os cartões vençam no mesmo dia, você gasta primeiro do com menor limite e "completa" com o que tem mais limite.
-
 Comentando com seus amigos, você percebeu que não era apenas você que tinha essa necessidade.
 Logo veio a ideia genial de criar uma empresa que concentra todos os cartões de crédito de uma pessoa e otimiza compras usando o melhor cartão disponível para essa compra.
 Agora, a pessoa vai ter apenas um cartão (sua wallet) e não terá que se preocupar com esses detalhes no seu dia-a-dia.
