@@ -15,7 +15,7 @@ Testes: GREEN
 
 -- POST /user/create --
 	-> Aqui você consegue criar um novo usuário. (obs: id_nat é o CPF)
-	-> Parametros: user(name, password, id_nat)
+	-> Parametros: user(name, password, id_nat) (Ex: '{"user": {"name": "Gustavo", "id_nat": "12345678901", "password": "123"}}')
 	-> Retorna: O objeto JSON do usuário criado (HTTP 200) ou HTPP(422) com o erro de criação caso haja um.
 
 -- GET /user/index --

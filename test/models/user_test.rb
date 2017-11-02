@@ -21,8 +21,13 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "invalid user with no name" do
-	foo = User.new(:name => "", :password => "I know nothing!", :id_nat => "05767887653")
+	  foo = User.new(:name => "", :password => "I know nothing!", :id_nat => "05767887653")
   	assert_not foo.valid?
+  end
+
+  test "duplicated id_nat" do
+    foo = User.new(:name => "Foo", :password => "Still know nothing.", :id_nat => users(:one).id_nat)
+    assert_not foo.valid?
   end
 
   
