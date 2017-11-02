@@ -18,10 +18,6 @@ Testes: GREEN
 	-> Parametros: user(name, password, id_nat) (Ex: '{"user": {"name": "Gustavo", "id_nat": "12345678901", "password": "123"}}')
 	-> Retorna: O objeto JSON do usuário criado (HTTP 200) ou HTPP(422) com o erro de criação caso haja um.
 
--- GET /user/index --
-	-> Aqui você consegue o objeto JSON com todos os usuários no sistema e suas infos. (útil para alguns testes mas melhor remover em breve)
-	-> Retorna: Lista de objetos JSON que representa todos os usuários do BD (HTTP 200)
-
 -- POST /user/login --
 	-> Retorna o token de login do usuário (caso haja sucesso na autenticação). Use o token para manipular o restante da API como o usuário correto logado.
 	-> Parametros: id_nat, password 

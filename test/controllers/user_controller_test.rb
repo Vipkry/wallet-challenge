@@ -1,11 +1,6 @@
 require 'test_helper'
 
 class UserControllerTest < ActionDispatch::IntegrationTest
-  
-  test "should get index" do
-    get user_index_url, as: :json
-    assert_response :success
-  end
 
   test "should create user" do
     assert_difference('User.count') do

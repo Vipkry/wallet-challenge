@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'user/index'
   post 'user/login'
   post 'user/create'
 
