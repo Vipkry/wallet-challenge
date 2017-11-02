@@ -4,8 +4,10 @@ one:
   name: Jon Snow
   password_digest: <%= BCrypt::Password.create('foobar', cost: 5) %>
   id_nat: 12345678901
+  login_token: <%= nil %>
 
 two:
   name: Ned Stark
   password_digest: <%= BCrypt::Password.create('foobar', cost: 5) %>
   id_nat: MyString
+  login_token: <%= nil %> 

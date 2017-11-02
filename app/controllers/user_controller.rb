@@ -23,6 +23,7 @@ class UserController < ApplicationController
   	user = User.find_by(:id_nat => params[:id_nat])
   	if user && user.authenticate(params[:password])
   		@token = User.new_token
+  		user.update(:login_token => @token)
   	    render json: @token, status: 200
   	else
    		render json: nil , status: 401

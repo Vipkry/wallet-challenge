@@ -25,4 +25,6 @@ class UserTest < ActiveSupport::TestCase
   	assert_not foo.valid?
   end
 
+  
+
 end

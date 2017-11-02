@@ -23,8 +23,10 @@ Testes: GREEN
 	-> Retorna: Lista de objetos JSON que representa todos os usuários do BD (HTTP 200)
 
 -- POST /user/login --
-	-> Retorna o token de login do usuário (caso haja sucesso na autenticação)
+	-> Retorna o token de login do usuário (caso haja sucesso na autenticação). Use o token para manipular o restante da API como o usuário correto logado.
 	-> Parametros: id_nat, password 
-	-> Retorna: token de autenticação
+	-> Retorna: token de autenticação.
+
+
 
 
