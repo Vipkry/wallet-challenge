@@ -10,9 +10,11 @@ Testes: GREEN
 
 ## Como usar
 
-	Execute localmente usando 'rails server', verifique a porta que o servidor vai utilizar (3000 se você não tiver feito nenhuma alteração) e você pode acessar por localhost:3000/ (mantive a página padrão "You're on rails")
+	Execute localmente usando 'rails server'.
+	Verifique a porta que o servidor vai utilizar (3000 se você não tiver feito nenhuma alteração)
+	e você pode acessar por localhost:3000/ (mantive a página padrão "You're on rails")
 
-	**Todos parametros de requisição assim como de resposta são esperados em JSON**
+	Todos parametros de requisição assim como de resposta são esperados em JSON
 
 ### POST /user/create
 	-> Aqui você consegue criar um novo usuário. (obs: id_nat é o CPF)
