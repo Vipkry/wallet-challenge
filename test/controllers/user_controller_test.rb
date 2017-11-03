@@ -47,7 +47,7 @@ class UserControllerTest < ActionDispatch::IntegrationTest
     # call the user again so it brings from the database and not from the fixture
     user_aux = User.find_by(:id_nat => user.id_nat)
     if user_aux
-      assert_equal user_aux.login_token, @response.body, "Login token wasn't saved on the correct user"
+      assert_equal user_aux.login_token, JSON.parse(@response.body)['token'], "Login token wasn't saved correctly."
     else 
       flunk "User wasn't found."
     end
