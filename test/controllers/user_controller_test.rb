@@ -12,7 +12,7 @@ class UserControllerTest < ActionDispatch::IntegrationTest
 
   test "should have a wallet" do
     post user_create_url, params: {user: { name: 'Kerrigan', password: '1234567890', id_nat: '12345678900' }}
-
+    
     wallet_id = User.last.user_wallet.id
 
     assert_not_nil wallet_id

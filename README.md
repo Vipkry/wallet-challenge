@@ -30,9 +30,9 @@ Testes: GREEN
 	-> Retorna: auth_token
 
 ### GET /user_wallet/show
-	-> Retorna o limite real que o usuário escolheu pra sua wallet(custom_limit), o limite máximo(limit), e o total de crédito disponível(credit_available). Requer autenticação.
+	-> Retorna o limite real que o usuário logado escolheu pra sua wallet(custom_limit), o limite máximo(limit), e o total de crédito disponível(credit_available). Requer autenticação.
 	-> Header: Authorization
-	-> Parametros: id_nat
+	-> Parametros: nenhum
 	-> Retorna: custom_limit, limit, credit_available
 
 
