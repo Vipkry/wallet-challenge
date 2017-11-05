@@ -19,7 +19,7 @@ class UserController < ApplicationController
   	if @user.save
   	  @user.password_digest = "not-shown"
       wallet = UserWallet.new(:user_id => @user.id)
-      wallet.save!
+      wallet.save
       render json: @user, status: 201
     else
       render json: @user.errors, status: 422
@@ -27,8 +27,8 @@ class UserController < ApplicationController
   end
 
   private
-	# don't trust the scary internet
-	def user_params
-	  params.require(:user).permit(:name, :password, :password_confirmation, :id_nat)
-	end
+  	# don't trust the scary internet
+  	def user_params
+  	  params.require(:user).permit(:name, :password, :password_confirmation, :id_nat)
+  	end
 end

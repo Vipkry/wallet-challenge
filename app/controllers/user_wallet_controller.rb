@@ -3,7 +3,7 @@ class UserWalletController < ApplicationController
 	# POST /user_wallet/show
 	def show
 		#TODO: return credit_available
-		user = AuthorizeApiRequest.call(request.headers).result
+		user = @current_user
 		
 		wallet = nil
 		wallet = UserWallet.find_by(:user_id => user.id) if user
