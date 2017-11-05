@@ -6,9 +6,8 @@ class CardController < ApplicationController
 		@card.user_wallet_id = @current_user.user_wallet.id
 
 		if @card.save
-
 			@card.cvv = "not-shown"
-
+			@card.user_wallet.update(:limit => @card.user_wallet.limit + @card.limit)
 			render json: @card, status: 201
 		else
 			render json: nil, status: 422
