@@ -18,7 +18,12 @@ class UserWalletControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show wallet params" do
-  	post user_wallet_show_url, params: { user_id: users(:wallet_user).id, token: users(:wallet_user).login_token}
+    post user_login_url, params: {id_nat: users(:wallet_user).id_nat, password: 'foobar'}
+    token = JSON.parse(@response.body)['auth_token']
+
+    assert_response 200 , "Expected successfull login."
+
+  	post user_wallet_show_url, params: { user_id: users(:wallet_user).id}, headers: {'Authorization' => token}
 
   	aux_response = JSON.parse(@response.body)
   	limit = aux_response['limit']

@@ -3,7 +3,7 @@ class UserController < ApplicationController
   skip_before_action :authenticate, only: [:create, :login]
 
   # POST /user/login
-  def authenticate 
+  def login
     command = AuthenticateUser.call(params[:id_nat], params[:password])
 
     if command.success?

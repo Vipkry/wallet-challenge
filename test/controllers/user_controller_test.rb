@@ -33,31 +33,16 @@ class UserControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should return login token" do
-    user = users(:one)
-    post user_login_url, params: {id_nat: user.id_nat, password: 'foobar'}
+    post user_login_url, params: {id_nat: users(:one).id_nat, password: 'foobar'}
     
     assert_response 200, "Login wasn't successful or it didn't return the correct response"
-    assert_not_empty @response.body, "No token received upon login"
-  end
-
-  test "should log in" do
-    user = users(:one)
-    post user_login_url, params: {id_nat: user.id_nat, password: 'foobar'}
-    
-    # call the user again so it brings from the database and not from the fixture
-    user_aux = User.find_by(:id_nat => user.id_nat)
-    if user_aux
-      assert_equal user_aux.login_token, JSON.parse(@response.body)['token'], "Login token wasn't saved correctly."
-    else 
-      flunk "User wasn't found."
-    end
+    assert_not_empty JSON.parse(@response.body)['auth_token'], "No token received upon login"
   end
 
   test "should not return login token" do
     post user_login_url, params: {id_nat: users(:one).id_nat, password: 'not_foobar'}
 
     assert_response 401, "Login was successful when it shouldn't be or it didn't return the correct response"
-    assert_equal @response.body, 'null', "Token received upon incorrect login"
   end
 
 end
