@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171105194827) do
+ActiveRecord::Schema.define(version: 20171105203617) do
+
+  create_table "cards", force: :cascade do |t|
+    t.string "name"
+    t.string "name_written"
+    t.string "number"
+    t.date "expiration_date"
+    t.integer "user_wallet_id"
+    t.integer "cvv"
+    t.decimal "spent"
+    t.decimal "limit"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "user_wallets", force: :cascade do |t|
     t.decimal "custom_limit"

@@ -1,6 +1,7 @@
 class UserWallet < ApplicationRecord
 	belongs_to :user
-
+	has_many :cards
+	
 	before_save :set_default_values
 
 	private 

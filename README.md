@@ -36,5 +36,3 @@ Testes: GREEN
 	-> Retorna: custom_limit, limit, credit_available
 
 
-
-

@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  name_written: MyString
+  number: MyString
+  user_wallet_id: 1
+  cvv: 1
+  expiration_date: 2017-11-05
+  spent: 9.99
+  limit: 9.99
+
+two:
+  name: MyString
+  name_written: MyString
+  number: MyString
+  user_wallet_id: 1
+  cvv: 1
+  expiration_date: 2017-11-05
+  spent: 9.99
+  limit: 9.99
