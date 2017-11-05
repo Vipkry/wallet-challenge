@@ -6,7 +6,7 @@ Rails version: 5.1.4
 
 Heroku url: TODO
 
-Testes: RED
+Testes: GREEN
 
 ## Como usar
 
