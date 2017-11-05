@@ -4,7 +4,7 @@ API em Rails de um sistema de gerenciamento de cartões de crédito
 Ruby version: 2.4.0
 Rails version: 5.1.4
 
-Heroku url: TODO
+Heroku url: https://wallet-challenge.herokuapp.com/
 
 Testes: GREEN
 
@@ -35,4 +35,20 @@ Testes: GREEN
 	-> Parametros: nenhum
 	-> Retorna: custom_limit, limit, credit_available
 
-
+### POST card/create
+		-> Aqui o usuário logado consegue adicionar um novo cartão à sua wallet. 
+		-> Header: Authorization
+		-> Parametros: card(number, cvv, expiration_year, expiration_month, name, name_written, limit)
+		Exemplo:  {
+								"card": 
+						      {
+						      "number": "42353913010563908", 
+						      "cvv": "4556",
+						      "expiration_year": "2022", 
+						      "expiration_month": "08",
+						      "name": "MyDummyCard", 
+						      "name_written": "Justine Henderson", 
+						      "limit": "15000.8" 
+						      }
+						 }
+		-> Retorna: o objeto JSON do card criado

@@ -1,5 +1,3 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
   name: MyString
   name_written: MyString
@@ -19,3 +17,13 @@ two:
   expiration_date: 2017-11-05
   spent: 9.99
   limit: 9.99
+
+real:
+  number: "42353913010563908"
+  cvv: 4556
+  expiration_date: 2017-11-05
+  name: "MyDummyCard"
+  name_written: "Justine Henderson"
+  limit: 15000.88
+  user_wallet_id: 1
+    
