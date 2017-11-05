@@ -1,5 +1,4 @@
 class UserWalletController < ApplicationController
-	before_action :authenticate
 	
 	# POST /user_wallet/show
 	def show
@@ -10,16 +9,6 @@ class UserWalletController < ApplicationController
 			render json: {custom_limit: wallet.custom_limit, limit: wallet.limit}, status: 200
 		else
 			render json: nil, status: 404
-		end
-	end
-
-
-	private
-
-	def authenticate
-		user = User.find_by(id: params[:user_id])
-		if !user || !user.check_token(params[:token])
-			render json: nil, status: 401
 		end
 	end
 

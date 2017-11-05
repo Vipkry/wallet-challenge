@@ -1,5 +1,18 @@
 class UserController < ApplicationController
 
+  skip_before_action :authenticate, only: [:create, :login]
+
+  # POST /user/login
+  def authenticate 
+    command = AuthenticateUser.call(params[:id_nat], params[:password])
+
+    if command.success?
+      render json: { auth_token: command.result }, status: 200
+    else 
+      render json: { error: command.errors }, status: 401 
+    end
+  end
+
   # POST /user/create
   def create
   	@user = User.new(user_params)
@@ -11,18 +24,6 @@ class UserController < ApplicationController
     else
       render json: @user.errors, status: 422
     end
-  end
-
-  # POST /user/login
-  def login
-  	user = User.find_by(:id_nat => params[:id_nat])
-  	if user && user.authenticate(params[:password])
-  		@token = User.new_token
-  		user.update(:login_token => @token)
-  	    render json: {user_id: user.id, token: @token}, status: 200
-  	else
-   		render json: nil , status: 401
-  	end
   end
 
   private
