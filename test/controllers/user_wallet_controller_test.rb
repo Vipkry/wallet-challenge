@@ -25,7 +25,7 @@ class UserWalletControllerTest < ActionDispatch::IntegrationTest
 
     assert_response 200 , "Expected successfull login."
 
-  	get user_wallet_show_url, params: { id_nat: users(:wallet_user).id_nat}, headers: {'Authorization' => token}
+  	get user_wallet_show_url,  headers: {'Authorization' => token}
 
   	aux_response = JSON.parse(@response.body)
   	limit = aux_response['limit'] if aux_response
@@ -41,4 +41,18 @@ class UserWalletControllerTest < ActionDispatch::IntegrationTest
   	#assert_not_nil credit_available
   	#assert_not_empty credit_available
   end
+
+  test "should get cards" do
+
+    post user_login_url, params: {id_nat: users(:wallet_user).id_nat, password: 'foobar'}
+    token = JSON.parse(@response.body)['auth_token']
+
+    assert_response 200, "Expected successfull login."
+
+    get user_wallet_show_cards_url, headers: {'Authorization' => token}
+
+    assert_response 200
+
+  end
+
 end

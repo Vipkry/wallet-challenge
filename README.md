@@ -35,7 +35,7 @@ Testes: GREEN
 	-> Parametros: nenhum
 	-> Retorna: custom_limit, limit, credit_available
 
-### POST card/create
+### POST /card/create
 		-> Aqui o usuário logado consegue adicionar um novo cartão à sua wallet. 
 		-> Header: Authorization
 		-> Parametros: card(number, cvv, expiration_year, expiration_month, name, name_written, limit)
@@ -52,3 +52,9 @@ Testes: GREEN
 						      }
 						 }
 		-> Retorna: o objeto JSON do card criado
+
+### GET /user_wallet/show_cards
+	-> Aqui o usuário logado consegue visualizar seus cartões
+	-> Header: Authorization 
+	-> Parametros: nenhum
+	-> Retorna: Lista de objetos JSON representando os cards do usuário logado

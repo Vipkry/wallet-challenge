@@ -36,6 +36,6 @@ class CardControllerTest < ActionDispatch::IntegrationTest
     											 limit: card.limit, 
     											 name: card.name, 
     											 name_written: card.name_written}}
-        assert_response 401, "Authorized action when it shouldn't."																				 
+    assert_response 401, "Authorized action when it shouldn't."																				 
 	end
 end

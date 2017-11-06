@@ -6,14 +6,24 @@ class CardController < ApplicationController
 		@card.user_wallet_id = @current_user.user_wallet.id
 
 		if @card.save
-			@card.cvv = "not-shown"
+			# only show the last 4 digits of the card
+			number = @card.number
+			number.reverse!
+			number = number.slice(0..3)
+			number.reverse!
+			@card.number = "**********" +  number
+
+			# don't show the cvv
+			@card.cvv = 0
+			
+			# adjust wallet limit
 			@card.user_wallet.update(:limit => @card.user_wallet.limit + @card.limit)
+
 			render json: @card, status: 201
 		else
 			render json: nil, status: 422
 		end
 	end
-
 
 	private
   	# don't trust the scary internet
