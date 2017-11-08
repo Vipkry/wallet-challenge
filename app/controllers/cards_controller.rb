@@ -46,6 +46,6 @@ class CardsController < ApplicationController
 	private
   	# don't trust the scary internet
   	def card_params
-  	  params.require(:card).permit(:name, :name_written, :limit, :number, :expiration_month, :expiration_year, :cvv)
+  	  params.require(:card).permit(:name, :name_written, :limit, :number, :expiration_month, :expiration_year, :cvv, :due_date_day, :due_date_month)
   	end
 end

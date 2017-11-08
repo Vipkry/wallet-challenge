@@ -1,27 +1,19 @@
 one:
   name: MyString
   name_written: MyString
-  number: MyString
+  number: 123456789012
   user_wallet_id: 1
-  cvv: 1
+  cvv: 455
   expiration_date: 2017-11-05
-  spent: 9.99
-  limit: 9.99
-
-two:
-  name: MyString
-  name_written: MyString
-  number: MyString
-  user_wallet_id: 1
-  cvv: 1
-  expiration_date: 2017-11-05
+  due_date: 2017-10-09
   spent: 9.99
   limit: 9.99
 
 real:
   number: "42353913010563908"
   cvv: 4556
-  expiration_date: 2017-11-05
+  expiration_date: 2019-29-05
+  due_date: 2017-02-28
   name: "MyDummyCard"
   name_written: "Justine Henderson"
   limit: 15000.88

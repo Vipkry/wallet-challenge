@@ -16,6 +16,8 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
                     											 cvv: card.cvv, 
                     											 expiration_year: '2020', 
                     											 expiration_month: '08', 
+                                           due_date_day: '20',
+                                           due_date_month: '07',
                     											 limit: card.limit, 
                     											 name: card.name, 
   											                   name_written: card.name_written}},
@@ -39,16 +41,11 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
 	end
 
   test "should destroy card and update wallet" do
-    
-    
     assert_difference("UserWallet.find(users(:wallet_user).user_wallet.id).limit", -users(:wallet_user).user_wallet.cards.first.limit) do
       assert_difference('Card.count', -1) do
         delete cards_url, params: {id: users(:wallet_user).user_wallet.cards.first.id}, headers: {'Authorization' => @token}
       end
     end
-
-
-
     assert_response 204
   end
 

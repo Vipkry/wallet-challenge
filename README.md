@@ -52,6 +52,8 @@ Testes: GREEN
 						      "cvv": "4556",
 						      "expiration_year": "2022", 
 						      "expiration_month": "08",
+						      "due_date_day": "10",
+						      "due_date_month": "09",
 						      "name": "MyDummyCard", 
 						      "name_written": "Justine Henderson", 
 						      "limit": "15000.8" 

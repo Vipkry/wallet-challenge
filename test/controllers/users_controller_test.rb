@@ -41,7 +41,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "should not return login token" do
     post users_login_url, params: {id_nat: users(:one).id_nat, password: 'not_foobar'}
-
+  
     assert_response 401, "Login was successful when it shouldn't be or it didn't return the correct response"
   end
 
