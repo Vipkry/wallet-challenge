@@ -1,4 +1,4 @@
-class UserWalletController < ApplicationController
+class UserWalletsController < ApplicationController
 	
 	# GET /user_wallet/show
 	def show

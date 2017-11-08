@@ -1,31 +1,31 @@
 require 'test_helper'
 
-class UserWalletControllerTest < ActionDispatch::IntegrationTest
+class UserWalletsControllerTest < ActionDispatch::IntegrationTest
   
   test "should not authorize" do
 
-  	get user_wallet_show_url, params: { user_id: users(:wallet_user).id }, headers: {'Authorization' => 'someToken'}
+  	get user_wallets_show_url, params: { user_id: users(:wallet_user).id }, headers: {'Authorization' => 'someToken'}
   	assert_response 401
 
-  	get user_wallet_show_url, params: { user_id: nil}, headers: {'Authorization' => 'someToken'}
+  	get user_wallets_show_url, params: { user_id: nil}, headers: {'Authorization' => 'someToken'}
   	assert_response 401
 
-  	get user_wallet_show_url, params: { user_id: nil}, headers: {'Authorization' => ''}
+  	get user_wallets_show_url, params: { user_id: nil}, headers: {'Authorization' => ''}
   	assert_response 401
 
-  	get user_wallet_show_url, params: { user_id: 'foo'}, headers: {'Authorization' => 'someToken'}
+  	get user_wallets_show_url, params: { user_id: 'foo'}, headers: {'Authorization' => 'someToken'}
   	assert_response 401
 
   end
 
   test "should show wallet params" do
     
-    post user_login_url, params: {id_nat: users(:wallet_user).id_nat, password: 'foobar'}
+    post users_login_url, params: {id_nat: users(:wallet_user).id_nat, password: 'foobar'}
     token = JSON.parse(@response.body)['auth_token']
 
     assert_response 200 , "Expected successfull login."
 
-  	get user_wallet_show_url,  headers: {'Authorization' => token}
+  	get user_wallets_show_url,  headers: {'Authorization' => token}
 
   	aux_response = JSON.parse(@response.body)
   	limit = aux_response['limit'] if aux_response
@@ -44,12 +44,12 @@ class UserWalletControllerTest < ActionDispatch::IntegrationTest
 
   test "should get cards" do
 
-    post user_login_url, params: {id_nat: users(:wallet_user).id_nat, password: 'foobar'}
+    post users_login_url, params: {id_nat: users(:wallet_user).id_nat, password: 'foobar'}
     token = JSON.parse(@response.body)['auth_token']
 
     assert_response 200, "Expected successfull login."
 
-    get user_wallet_show_cards_url, headers: {'Authorization' => token}
+    get user_wallets_show_cards_url, headers: {'Authorization' => token}
 
     assert_response 200
 

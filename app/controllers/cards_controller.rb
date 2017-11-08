@@ -1,4 +1,4 @@
-class CardController < ApplicationController
+class CardsController < ApplicationController
 
 	# POST /card/create
 	def create
@@ -24,6 +24,19 @@ class CardController < ApplicationController
 			render json: nil, status: 422
 		end
 	end
+
+	# GET /card/destroy
+	def destroy
+		@card = Card.find(params[:id]) if params[:id]
+		if @card
+			@card.delete
+
+			render json: nil, status: 204
+		else
+			render json: nil, status: 404
+		end
+	end
+
 
 	private
   	# don't trust the scary internet

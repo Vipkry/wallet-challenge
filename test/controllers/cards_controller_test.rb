@@ -1,16 +1,16 @@
 require 'test_helper'
 
-class CardControllerTest < ActionDispatch::IntegrationTest
+class CardsControllerTest < ActionDispatch::IntegrationTest
   
   test "should create valid card" do
-  	post user_login_url, params: {id_nat: users(:wallet_user).id_nat, password: 'foobar'}
+  	post users_login_url, params: {id_nat: users(:wallet_user).id_nat, password: 'foobar'}
     token = JSON.parse(@response.body)['auth_token']
 
     if token
     	card = cards(:real)
       user = User.find_by(:id_nat => users(:wallet_user).id_nat)
       initial_limit = UserWallet.find_by(:user_id => user.id).limit
-    	post card_create_url, params: {card: { number: card.number,
+    	post cards_create_url, params: {card: { number: card.number,
                       											 cvv: card.cvv, 
                       											 expiration_year: '2020', 
                       											 expiration_month: '08', 
@@ -29,7 +29,7 @@ class CardControllerTest < ActionDispatch::IntegrationTest
 
 	test "should not authorize" do
 		card = cards(:real)
-		post card_create_url params: {card: { number: card.number,
+		post cards_create_url params: {card: { number: card.number,
     											 cvv: card.cvv, 
     											 expiration_year: '2020', 
     											 expiration_month: '08', 
@@ -38,4 +38,12 @@ class CardControllerTest < ActionDispatch::IntegrationTest
     											 name_written: card.name_written}}
     assert_response 401, "Authorized action when it shouldn't."																				 
 	end
+
+  test "should destroy card" do
+    assert_difference('Card.count', -1) do
+      delete cards_url(), as: :json
+    end
+
+    assert_response 204
+  end
 end
