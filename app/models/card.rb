@@ -8,10 +8,9 @@ class Card < ApplicationRecord
 
 	private
 		def set_expiration
-			if expiration_month && expiration_month
+			if expiration_month && expiration_year
 				# sets date to the last day of the chosen month
 				self.expiration_date = Date.new(expiration_year.to_i, expiration_month.to_i, -1)
 			end
 		end
-
 end
