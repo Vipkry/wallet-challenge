@@ -31,7 +31,7 @@ Wallet é a entidade que representa o seu produto. É nela que todos os cartões
 
 * Uma wallet pode possuir vários cartões (motivo disso tudo) OK 
 * Uma wallet só pode pertencer a um user OK 
-* O limite máximo de uma wallet deve ser a soma de todos os cartões dela  
+* O limite máximo de uma wallet deve ser a soma de todos os cartões dela  OK
 * O usuário pode setar o limite real da wallet, desde que não ultrapasse o limite máximo
 * Ter a capacidade de adicionar ou remover um cartão a qualquer momento
 * O user deve ser capaz de acessar as informações de sua wallet a qualquer momento (limite setado pelo o user, limite máximo e crédito disponível)

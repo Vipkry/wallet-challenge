@@ -1,6 +1,6 @@
 class UserWalletsController < ApplicationController
 	
-	# GET /user_wallet/show
+	# GET /user_wallets/show
 	def show
 		#TODO: return credit_available
 		user = @current_user
@@ -12,11 +12,11 @@ class UserWalletsController < ApplicationController
 		if wallet
 			render json: {custom_limit: wallet.custom_limit, limit: wallet.limit}, status: 200
 		else
-			render json: nil, status: 404
+			render status: 404
 		end
 	end
 
-	# GET /user_wallet/show_cards
+	# GET /user_wallets/show_cards
 	def show_cards
 		user = @current_user
 
@@ -40,7 +40,7 @@ class UserWalletsController < ApplicationController
 
 			render json: @cards, status: 200
 		else
-			render json: nil, status: 404
+			render status: 404
 		end
 	end
 

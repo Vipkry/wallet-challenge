@@ -6,7 +6,7 @@ Rails version: 5.1.4
 
 Heroku url: https://wallet-challenge.herokuapp.com/
 
-Testes: RED
+Testes: GREEN
 
 ## Como usar
 
@@ -57,10 +57,10 @@ Testes: RED
 						      "limit": "15000.8" 
 						      }
 						 }
-		-> Retorna: o objeto JSON do card criado
+		-> Retorna: O objeto JSON do card criado (HTTP 200) ou HTPP(422) com o erro de criação caso haja um.
 
 ### DELETE /cards/
-	-> Aqui o usuário logado consegue apagar algum cartão da wallet dele.
+	-> Aqui o usuário logado consegue apagar algum cartão da wallet dele. Quando ele apaga um cartão, o valor do limite desse cartão diminui o limite máximo da wallet desse usuário. Caso esse novo valor seja menor que o limite personalizado do usuário, o limite personalizado é reduzido para ficar igual ao valor máximo.
 	-> Header: Authorization
 	-> Parametros: id (id do cartão, pode ser checado em GET /user_wallet/show_cards)
-	-> Retorna: Lista de objetos JSON representando os cards do usuário logado
+	-> Retorna: no content (204)

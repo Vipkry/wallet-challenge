@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   skip_before_action :authenticate, only: [:create, :login]
 
-  # POST /user/login
+  # POST /users/login
   def login
     command = AuthenticateUser.call(params[:id_nat], params[:password])
 
@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # POST /user/create
+  # POST /users/create
   def create
   	@user = User.new(user_params)
   	if @user.save

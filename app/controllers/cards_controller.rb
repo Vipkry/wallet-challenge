@@ -1,6 +1,6 @@
 class CardsController < ApplicationController
 
-	# POST /card/create
+	# POST /cards/create
 	def create
 		@card = Card.new(card_params)
 		@card.user_wallet_id = @current_user.user_wallet.id
@@ -21,19 +21,24 @@ class CardsController < ApplicationController
 
 			render json: @card, status: 201
 		else
-			render json: nil, status: 422
+			render json: @card.errors, status: 422
 		end
 	end
 
-	# GET /card/destroy
+	# DELETE /cards/
 	def destroy
 		@card = Card.find(params[:id]) if params[:id]
 		if @card
-			@card.delete
-
-			render json: nil, status: 204
+			if @card.user_wallet_id == @current_user.user_wallet.id
+				user_wallet = @card.user_wallet
+				user_wallet.update(:limit => user_wallet.limit - @card.limit) #update wallet limit to adjust the card removal
+				@card.delete
+				render status: 204
+			else
+				render json: {error: "Not Authorized"}, status: 401 # tried to delete a card of someone else
+			end
 		else
-			render json: nil, status: 404
+			render status: 404 # card not found
 		end
 	end
 
