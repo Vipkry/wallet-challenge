@@ -5,8 +5,17 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
   setup do
     post users_login_url, params: {id_nat: users(:wallet_user).id_nat, password: 'foobar'}
     @token = JSON.parse(@response.body)['auth_token']
-
-    Card.create!(:user_wallet_id => users(:wallet_user).user_wallet.id, :limit => 1000, :number => '123123123')
+    card = cards(:real)
+    Card.create!(number: card.number,
+                 cvv: card.cvv, 
+                 expiration_year: '2020', 
+                 expiration_month: '08', 
+                 due_date_day: '20',
+                 due_date_month: '07',
+                 limit: card.limit, 
+                 name: card.name, 
+                 name_written: card.name_written,
+                 user_wallet_id: users(:wallet_user).user_wallet.id)
   end
 
   test "should create valid card" do
