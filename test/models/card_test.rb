@@ -135,11 +135,28 @@ class CardTest < ActiveSupport::TestCase
   end
 
   test "should set default name value as 'Card'" do
+  	@card.name = ""
+  	@card.save!
+  	assert_equal @card.name, "Card"
   end
 
   test "should set expiration_date value as Date" do
+  	exp_month = @card.expiration_month
+  	exp_year = @card.expiration_year
+  	assert @card.expiration_date.nil?
+  	@card.save!
+  	assert_equal @card.expiration_date, Date.new(exp_year.to_i, exp_month.to_i, -1),
+  							 "Expected to process expiration_date infos to Date format."
+
   end
 
   test "should set due_date value as Date" do
+  	due_date_month = @card.due_date_month
+  	due_date_day = @card.due_date_day
+  	assert @card.due_date.nil?
+  	@card.save!
+  	assert_equal @card.due_date, Date.new(Date.today.year, due_date_month.to_i, due_date_day.to_i),
+  							 "Expected to process due_date infos to Date format."
   end
 end
+
