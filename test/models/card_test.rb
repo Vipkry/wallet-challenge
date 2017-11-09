@@ -8,9 +8,8 @@ class CardTest < ActiveSupport::TestCase
                  expiration_year: '2020', 
                  expiration_month: '08', 
                  due_date_day: '20',
-                 due_date_month: '07',
-                 limit: card.limit, 
-                 name: card.name, 
+                 limit: card.limit,
+                 name: card.name,
                  name_written: card.name_written,
                  user_wallet_id: users(:wallet_user).user_wallet.id)
 	end
@@ -98,19 +97,6 @@ class CardTest < ActiveSupport::TestCase
   	assert_not card.valid?
   	card.due_date_day = Card.last.due_date.day
 
-  	# test due_date_month presence and numericality
-  	card.due_date_month = "13" # greater than 12
-  	assert_not card.valid?
-  	card.due_date_month = "-1" # less than 0
-  	assert_not card.valid?
-  	card.due_date_month = "10JonSnowKnowsNothing1" # numericality integer only
-  	assert_not card.valid?
-  	card.due_date_month = nil
-  	assert_not card.valid?
-  	card.due_date_month = "" #empty
-  	assert_not card.valid?
-  	card.due_date_month = Card.last.due_date.month
-
   	# test cvv presence and numericality
   	card.cvv = "-1" # less than 0
   	assert_not card.valid?
@@ -147,16 +133,15 @@ class CardTest < ActiveSupport::TestCase
   	@card.save!
   	assert_equal @card.expiration_date, Date.new(exp_year.to_i, exp_month.to_i, -1),
   							 "Expected to process expiration_date infos to Date format."
-
   end
 
   test "should set due_date value as Date" do
-  	due_date_month = @card.due_date_month
   	due_date_day = @card.due_date_day
   	assert @card.due_date.nil?
   	@card.save!
-  	assert_equal @card.due_date, Date.new(Date.today.year, due_date_month.to_i, due_date_day.to_i),
+  	assert_equal @card.due_date, Date.new(Date.today.year, Date.today.month, due_date_day.to_i),
   							 "Expected to process due_date infos to Date format."
   end
+
 end
 

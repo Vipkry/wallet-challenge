@@ -11,7 +11,6 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
                  expiration_year: '2020', 
                  expiration_month: '08', 
                  due_date_day: '20',
-                 due_date_month: '07',
                  limit: card.limit, 
                  name: card.name, 
                  name_written: card.name_written,

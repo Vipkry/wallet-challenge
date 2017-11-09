@@ -6,7 +6,6 @@ class Card < ApplicationRecord
 	validates :number, length: {in: 10..40}, presence: true, numericality: { only_integer: true }
 
 	validates :due_date_day, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 31}
-	validates :due_date_month, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 13}
 	validates :expiration_year, presence: true, numericality: { only_integer: true, greater_than: 2016}
 	validates :expiration_month, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 13}
 
@@ -22,7 +21,6 @@ class Card < ApplicationRecord
 	attr_accessor :expiration_year
 	# due date attr_acessor so it makes the input of these values easier
 	attr_accessor :due_date_day
-	attr_accessor :due_date_month
 
 	private
 		def set_expiration
@@ -33,9 +31,9 @@ class Card < ApplicationRecord
 		end
 
 		def set_due_date
-			if due_date_month && due_date_day
+			if due_date_day
 				# sets date to the actual year (year won't make any difference here)
-				self.due_date = Date.new(Date.today.year, due_date_month.to_i, due_date_day.to_i)
+				self.due_date = Date.new(Date.today.year, Date.today.month, due_date_day.to_i)
 			end
 		end
 
