@@ -5,9 +5,9 @@ class Card < ApplicationRecord
 	validates :name_written, length: {in: 4..100}, presence: true
 	validates :number, length: {in: 10..40}, presence: true, numericality: { only_integer: true }
 
-	validates :due_date_day, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 31}
-	validates :expiration_year, presence: true, numericality: { only_integer: true, greater_than: 2016}
-	validates :expiration_month, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 13}
+	validates :due_date_day, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 31}, on: :create
+	validates :expiration_year, presence: true, numericality: { only_integer: true, greater_than: 2016}, on: :create
+	validates :expiration_month, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 13}, on: :create
 
 	validates :cvv, presence: true, numericality: { only_integer: true, greater_than: 0 }
 	validates :limit, presence: true, numericality: { greater_than: 0 }
@@ -21,6 +21,18 @@ class Card < ApplicationRecord
 	attr_accessor :expiration_year
 	# due date attr_acessor so it makes the input of these values easier
 	attr_accessor :due_date_day
+
+	def hide_confidencial_info
+		# only show the last 4 digits of the card
+		number = self.number
+		number.reverse!
+		number = number.slice(0..3)
+		number.reverse!
+		self.number = "**********" +  number
+
+		# don't show the cvv
+		self.cvv = 0
+	end
 
 	private
 		def set_expiration

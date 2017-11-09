@@ -1,24 +1,15 @@
 class CardsController < ApplicationController
-
+	require 'bigdecimal'
 	# POST /cards/create
 	def create
 		@card = Card.new(card_params)
 		@card.user_wallet_id = @current_user.user_wallet.id
 
 		if @card.save
-			# only show the last 4 digits of the card
-			number = @card.number
-			number.reverse!
-			number = number.slice(0..3)
-			number.reverse!
-			@card.number = "**********" +  number
-
-			# don't show the cvv
-			@card.cvv = 0
-			
 			# adjust wallet limit
 			@card.user_wallet.update(:limit => @card.user_wallet.limit + @card.limit)
 
+			@card.hide_confidencial_info
 			render json: @card, status: 201
 		else
 			render json: @card.errors, status: 422
@@ -41,6 +32,31 @@ class CardsController < ApplicationController
 			render status: 404 # card not found
 		end
 	end
+
+	# GET /cards/pay
+	def pay
+		unless params[:ammount].nil? || params[:ammount].empty?
+			ammount = BigDecimal.new(params[:ammount]) #check
+			@card = Card.find(params[:id]) if params[:id]
+			if @card
+				if @card.user_wallet_id == @current_user.user_wallet.id
+					if @card.spent < ammount
+						@card.update(:spent => 0)
+					else
+						@card.update(:spent => @card.spent - ammount)
+					end
+					@card.hide_confidencial_info
+					render json: @card, status: 200
+				else
+					render json: {error: "Not Authorized."}, status: 401 # tried to pay a card of someone else
+				end
+			else
+				render json: {error: "Should have a valid card id."}, status: 404
+			end
+		else
+			render json: {error: "Should have an ammount."}, status: 400
+		end
+	end		
 
 
 	private
