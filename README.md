@@ -8,6 +8,11 @@ Heroku url: https://wallet-challenge.herokuapp.com/ (atualizado em 08/11/17)
 
 Testes: GREEN
 
+## Observações sobre o desafio
+	-> Estou considerando que na data de vencimento o valor da fatura do cartão necessariamente vai ser
+	pago pelo usuário, ou seja, o limite gira automaticamente após a data de vencimento da fatura do cartão
+	caso o usuário não tenha informado o pagamento em /cards/pay
+
 ## Como usar
 
 	Execute localmente usando 'rails server'.
@@ -21,7 +26,7 @@ Testes: GREEN
 ### POST /users/create
 	-> Aqui você consegue criar um novo usuário. (obs: id_nat é o CPF)
 	-> Parametros: user(name, password, id_nat) (Ex: '{"user": {"name": "Gustavo", "id_nat": "12345678901", "password": "123"}}')
-	-> Retorna: O objeto JSON do usuário criado (HTTP 200) ou HTPP(422) com o erro de criação caso haja um.
+	-> Retorna: O objeto JSON do usuário criado (HTTP 200) ou com o erro de criação caso haja um (HTTP 422).
 
 ### POST /users/login
 	-> Retorna o token de login do usuário (caso haja sucesso na autenticação) junto com o id do usuário. Use o token para manipular o restante da API como o usuário correto logado. (Incluindo
@@ -59,10 +64,17 @@ Testes: GREEN
 						      "limit": "15000.8" 
 						      }
 						 }
-		-> Retorna: O objeto JSON do card criado (HTTP 200) ou HTPP(422) com o erro de criação caso haja um.
+		-> Retorna: O objeto JSON do card criado (HTTP 200) ou com o erro de criação caso haja um (HTTP 422).
 
 ### DELETE /cards/
 	-> Aqui o usuário logado consegue apagar algum cartão da wallet dele. Quando ele apaga um cartão, o valor do limite desse cartão diminui o limite máximo da wallet desse usuário. Caso esse novo valor seja menor que o limite personalizado do usuário, o limite personalizado é reduzido para ficar igual ao valor máximo.
 	-> Header: Authorization
 	-> Parametros: id (id do cartão, pode ser checado em GET /user_wallet/show_cards)
 	-> Retorna: no content (204)
+
+### GET /cards/pay/
+	-> Aqui o usuário logado consegue pagar uma parte de algum cartão da wallet dele. Quando ele paga um cartão, o limite atual é restaurado de acordo com o valor pago. A data de pagamento, entretanto, se mantém. (Se o usuário não pagar até a data de vencimento da fatura, após essa data o atributo 'spent' reseta). Se o usuário disser que pagou além do que o sistema tem registrado como 'spent', o atributo 'spent' zera.
+	-> Header: Authorization
+	-> Parametros: id (id do cartão, pode ser checado em GET /user_wallet/show_cards), ammount
+	-> Retorna: JSON do objeto do cartão (200)
+
