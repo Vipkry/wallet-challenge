@@ -3,7 +3,7 @@ class Card < ApplicationRecord
 
 	validates :name, length: {in: 0..35}, allow_blank: true
 	validates :name_written, length: {in: 4..100}, presence: true
-	validates :number, length: {in: 10..50}, presence: true, numericality: { only_integer: true }
+	validates :number, length: {in: 10..40}, presence: true, numericality: { only_integer: true }
 
 	validates :due_date_day, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 31}
 	validates :due_date_month, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 13}
