@@ -35,7 +35,7 @@ Testes: GREEN
 	-> Retorna: auth_token
 
 ### GET /user_wallets/show
-	-> Retorna o limite real que o usuário logado escolheu pra sua wallet(custom_limit), o limite máximo(limit), e o total de crédito disponível(credit_available). Requer autenticação.
+	-> Retorna o limite real que o usuário logado escolheu pra sua wallet(custom_limit), o limite máximo(limit), e o total de crédito disponível(credit_available).
 	-> Header: Authorization
 	-> Parametros: nenhum
 	-> Retorna: custom_limit, limit, credit_available
@@ -45,6 +45,14 @@ Testes: GREEN
 	-> Header: Authorization
 	-> Parametros: nenhum
 	-> Retorna: Lista de objetos JSON representando os cards do usuário logado
+
+### GET /user_wallets/set_custom_limit
+	-> Aqui o usuário logado consegue modificar o limite personalizado da sua wallet.
+		 Caso haja um input de valor maior que o limite máximo da wallet, o sistema irá admitir
+		 que o limite personalizado  vai assumir seu valor máximo (isso é, o limite máximo da wallet).
+	-> Header: Authorization
+	-> Parametros: custom_limit
+	-> Retorna: Objeto JSON da wallet
 
 ### POST /cards/create
 		-> Aqui o usuário logado consegue adicionar um novo cartão à sua wallet. 

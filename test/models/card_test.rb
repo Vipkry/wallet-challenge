@@ -19,9 +19,18 @@ class CardTest < ActiveSupport::TestCase
   end
 
   test "should have multiple invalid cards" do
-  	card = @card
   	@card.save!
-
+    card = Card.new(number: @card.number,
+                 cvv: @card.cvv, 
+                 expiration_year: '2020', 
+                 expiration_month: '08', 
+                 due_date_day: '20',
+                 limit: @card.limit,
+                 name: @card.name,
+                 name_written: @card.name_written,
+                 user_wallet_id: users(:wallet_user).user_wallet.id)
+    assert card.valid?
+    
   	# test name length
   	card.name = "THIS NAME SHOULD BE TOO BIG TO BE VALIDATED LOREM IPSUM DOLOR SIT AMET"
   	assert_not card.valid?

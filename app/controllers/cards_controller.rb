@@ -37,6 +37,7 @@ class CardsController < ApplicationController
 	def pay
 		unless params[:ammount].nil? || params[:ammount].empty?
 			ammount = BigDecimal.new(params[:ammount]) #check
+			ammount = ammount * - 1 if ammount < 0 #don't let negative values pass through
 			@card = Card.find(params[:id]) if params[:id]
 			if @card
 				if @card.user_wallet_id == @current_user.user_wallet.id
