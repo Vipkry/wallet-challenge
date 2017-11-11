@@ -7,28 +7,27 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
     @token = JSON.parse(@response.body)['auth_token']
     card = cards(:real)
     @card = Card.create!(number: card.number,
-                 cvv: card.cvv, 
+                 cvv: card.cvv,
                  expiration_year: '2020', 
                  expiration_month: '08', 
                  due_day: '20',
-                 limit: card.limit, 
-                 name: card.name, 
+                 limit: card.limit,
+                 name: card.name,
                  name_written: card.name_written,
                  user_wallet_id: users(:wallet_user).user_wallet.id)
     @card.update!(:spent => 1000)
-
   end
 
   test "should create valid card" do
   	card = cards(:real)
     initial_limit = UserWallet.find_by(:user_id => users(:wallet_user).id).limit
   	post cards_create_url, params: {card: { number: card.number,
-                    											 cvv: card.cvv, 
-                    											 expiration_year: '2020', 
-                    											 expiration_month: '08', 
+                    											 cvv: card.cvv,
+                    											 expiration_year: '2020',
+                    											 expiration_month: '08',
                                            due_day: '20',
-                    											 limit: card.limit, 
-                    											 name: card.name, 
+                    											 limit: card.limit,
+                    											 name: card.name,
   											                   name_written: card.name_written}},
 						               headers: {'Authorization' => @token}
     final_limit = UserWallet.find_by(:user_id => users(:wallet_user).id).limit
@@ -41,10 +40,10 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
 		card = cards(:real)
 		post cards_create_url params: {card: { number: card.number,
     											 cvv: card.cvv, 
-    											 expiration_year: '2020', 
-    											 expiration_month: '08', 
-    											 limit: card.limit, 
-    											 name: card.name, 
+    											 expiration_year: '2020',
+    											 expiration_month: '08',
+    											 limit: card.limit,
+    											 name: card.name,
     											 name_written: card.name_written}}
     assert_response 401, "Authorized action when it shouldn't."																				 
 	end
@@ -82,5 +81,4 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
     get cards_pay_url, params: {id: @card.id, ammount: @card.spent * 10}, headers: {'Authorization' => @token}
     assert_equal 0, Card.find(@card.id).spent # @card is mocked
   end
-
 end

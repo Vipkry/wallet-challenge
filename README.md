@@ -8,11 +8,6 @@ Heroku url: https://wallet-challenge.herokuapp.com/ (atualizado em 08/11/17)
 
 Testes: GREEN
 
-## Observações sobre o desafio
-	-> Estou considerando que na data de vencimento o valor da fatura do cartão necessariamente vai ser
-	pago pelo usuário, ou seja, o limite gira automaticamente após a data de vencimento da fatura do cartão
-	caso o usuário não tenha informado o pagamento em /cards/pay
-
 ## Como usar
 
 	Execute localmente usando 'rails server'.
@@ -25,7 +20,7 @@ Testes: GREEN
 
 ### POST /users/create
 	-> Aqui você consegue criar um novo usuário. (obs: id_nat é o CPF)
-	-> Parametros: user(name, password, id_nat) (Ex: '{"user": {"name": "Gustavo", "id_nat": "12345678901", "password": "123"}}')
+	-> Parametros: user(name, password, password_confirmation, id_nat) (Ex: '{"user": {"name": "Gustavo", "id_nat": "12345678901", "password": "123", "password_confirmation": "123"}}')
 	-> Retorna: O objeto JSON do usuário criado (HTTP 200) ou com o erro de criação caso haja um (HTTP 422).
 
 ### POST /users/login
@@ -38,7 +33,7 @@ Testes: GREEN
 	-> Retorna o limite real que o usuário logado escolheu pra sua wallet(custom_limit), o limite máximo(limit), e o total de crédito disponível(credit_available).
 	-> Header: Authorization
 	-> Parametros: nenhum
-	-> Retorna: custom_limit, limit, credit_available
+	-> Retorna: custom_limit, limit, credit
 
 ### GET /user_wallets/show_cards
 	-> Aqui o usuário logado consegue visualizar seus cartões.
@@ -48,7 +43,7 @@ Testes: GREEN
 
 ### GET /user_wallets/set_custom_limit
 	-> Aqui o usuário logado consegue modificar o limite personalizado da sua wallet.
-		 Caso haja um input de valor maior que o limite máximo da wallet, o sistema irá admitir
+		 Caso haja um input de valor maior que o limite máximo da wallet ou menor que zero, o sistema irá admitir
 		 que o limite personalizado  vai assumir seu valor máximo (isso é, o limite máximo da wallet).
 	-> Header: Authorization
 	-> Parametros: custom_limit

@@ -7,8 +7,6 @@ class CardsController < ApplicationController
 
 		if @card.save
 			# adjust wallet limit
-			@card.user_wallet.update(:limit => @card.user_wallet.limit + @card.limit)
-
 			@card.hide_confidencial_info
 			render json: @card, status: 201
 		else

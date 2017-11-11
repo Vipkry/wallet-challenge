@@ -3,7 +3,7 @@ class UserWallet < ApplicationRecord
 	has_many :cards
 	
 	before_save :set_default_values
-	before_update :check_custom_limit
+	before_update :set_custom_limit
 
 	def credit_available
 		total_spent = Card.where('user_wallet_id = ?', self.id).sum(:spent)
@@ -12,10 +12,18 @@ class UserWallet < ApplicationRecord
 		return credit_available
 	end
 
+	def add_limit(value)
+		self.update(:limit => self.limit + value)
+	end
+
+	def remove_limit(value)
+		self.update(:limit => self.limit - value)
+	end
+
 	def spend(ammount)
-		if ammount < self.credit_available
+		if ammount > self.credit_available
 			# don't have enough money and/or has no card on the wallet
-			errors.add(:limit, "No credit/card available for this purchase!#{self.credit_available}")
+			errors.add(:limit, "No credit/card available for this purchase!")
 			return false
 		else
 			# Select the card with the furthest due day
@@ -54,6 +62,8 @@ class UserWallet < ApplicationRecord
 					end
 				end
 
+				return false if winners.empty? 
+
 				winner = winners.first
 
 				# === Check if there's a draw ===
@@ -84,14 +94,14 @@ class UserWallet < ApplicationRecord
 
 		def set_default_values
 			self.limit = 0 if self.limit.nil?
-			self.custom_limit = 0 if self.custom_limit.nil?
+			self.custom_limit = self.limit if self.custom_limit.nil?
 		end
 
-		def check_custom_limit
+		def set_custom_limit
 			if self.limit < self.custom_limit
 				self.custom_limit = self.limit
 			elsif self.custom_limit < 0
-				self.custom_limit = 0
+				self.custom_limit = self.limit
 			end
 		end
 end

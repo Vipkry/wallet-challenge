@@ -16,6 +16,12 @@ class UsersController < ApplicationController
   # POST /users/create
   def create
   	@user = User.new(user_params)
+
+    if params[:user][:password] != params[:user][:password_confirmation]
+      render json: {error: "Password and Password Confirmation didn't match!"}, status: 400
+      return
+    end
+
   	if @user.save
   	  @user.password_digest = "not-shown"
       wallet = UserWallet.new(:user_id => @user.id)

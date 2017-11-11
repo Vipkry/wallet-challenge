@@ -51,8 +51,6 @@ class UserWalletsController < ApplicationController
 		if @wallet
 			unless params[:custom_limit].nil? || params[:custom_limit].empty?
 				custom_limit = BigDecimal.new(params[:custom_limit])
-				custom_limit = 0 if custom_limit < 0 # dont let the user input negative values
-				custom_limit = @wallet.limit if custom_limit > @wallet.limit # nor a value higher than the actual limit
 				@wallet.update(:custom_limit => custom_limit)
 				render json: @wallet, status: 200
 			else

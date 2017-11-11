@@ -143,5 +143,10 @@ class CardTest < ActiveSupport::TestCase
   	assert_equal @card.expiration_date, Date.new(exp_year.to_i, exp_month.to_i, -1),
   							 "Expected to process expiration_date infos to Date format."
   end
+
+  test "should not let spent be greater than limit" do
+    @card.spent = @card.limit + 0.0001
+    assert_not @card.valid?
+  end
 end
 

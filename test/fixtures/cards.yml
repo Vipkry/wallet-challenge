@@ -6,8 +6,7 @@ one:
   cvv: 455
   expiration_date: 2017-11-05
   due_day: 9
-  spent: 9.99
-  limit: 9.99
+  limit: 9999.99
 
 real:
   number: "42353913010563908"

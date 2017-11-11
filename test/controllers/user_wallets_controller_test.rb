@@ -30,16 +30,15 @@ class UserWalletsControllerTest < ActionDispatch::IntegrationTest
   	aux_response = JSON.parse(@response.body)
   	limit = aux_response['limit'] if aux_response
   	custom_limit = aux_response['custom_limit'] if aux_response
-  	#credit_available = aux_response['credit_available']
+  	credit = aux_response['credit'] if aux_response
 
   	assert_response 200
   	assert_not_nil limit
   	assert_not_nil custom_limit
   	assert_not_empty limit
   	assert_not_empty custom_limit
-
-  	#assert_not_nil credit_available
-  	#assert_not_empty credit_available
+  	assert_not_nil credit
+  	assert_not_empty credit
   end
 
   test "should get cards" do
@@ -68,6 +67,59 @@ class UserWalletsControllerTest < ActionDispatch::IntegrationTest
 
     get user_wallets_set_custom_limit_url, params: {custom_limit: -value}, headers: {'Authorization' => @token}
     assert_response 200
-    assert_equal UserWallet.find(wallet.id).custom_limit, 0, "Custom limit should have been set to zero."
+    assert_equal UserWallet.find(wallet.id).custom_limit, UserWallet.find(wallet.id).limit, "Custom limit should have been set to the max limit."
+  end
+
+  test "should have ok at spend" do
+    # setup
+    card = cards(:real)
+    @card = Card.create!(number: card.number,
+                 cvv: card.cvv,
+                 expiration_year: '2020', 
+                 expiration_month: '08', 
+                 due_day: '20',
+                 limit: card.limit,
+                 name: card.name,
+                 name_written: card.name_written,
+                 user_wallet_id: users(:wallet_user).user_wallet.id)
+
+    assert_difference("Card.all.sum(:spent)", +100) do
+      get user_wallets_spend_url, params: {ammount: 100}, headers: {'Authorization' => @token}
+      assert_response 200
+    end 
+
+    travel_to(Date.new(Date.today.year, 2, 28)) do #testing feb 28
+      post users_login_url, params: {id_nat: users(:wallet_user).id_nat, password: 'foobar'}
+      token = JSON.parse(@response.body)['auth_token']
+
+      assert_difference("Card.all.sum(:spent)", +100) do
+        get user_wallets_spend_url, params: {ammount: 100}, headers: {'Authorization' => token}
+        assert_response 200
+      end     
+    end
+  end
+
+  test "should not have ok at spend" do
+    # setup
+    card = cards(:real)
+    @card = Card.create!(number: card.number,
+                 cvv: card.cvv,
+                 expiration_year: '2020', 
+                 expiration_month: '08', 
+                 due_day: '20',
+                 limit: card.limit,
+                 name: card.name,
+                 name_written: card.name_written,
+                 user_wallet_id: users(:wallet_user).user_wallet.id)
+    
+    get user_wallets_spend_url, params: {ammount: @card.limit + 1}, headers: {'Authorization' => @token}
+    assert_response 400
+
+    get user_wallets_spend_url, headers: {'Authorization' => @token}
+    assert_response 400
+      
+    get user_wallets_spend_url, params: {ammount: @card.limit + 1}
+    assert_response 401
+   
   end
 end

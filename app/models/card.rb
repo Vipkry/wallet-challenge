@@ -13,9 +13,13 @@ class Card < ApplicationRecord
 	validates :limit, presence: true, numericality: { greater_than: 0 }
 
 	validate  :spent_cant_be_higher_than_limit
+	validate  :number_uniqueness_by_user, on: :create
 
-	before_save :set_expiration
 	before_validation :set_default_values
+	before_save :set_expiration
+	after_create :add_wallet_limit
+	after_destroy :remove_wallet_limit
+	
 
 	# expiration attr_acessor so it makes the input of these values easier
 	attr_accessor :expiration_month
@@ -38,6 +42,20 @@ class Card < ApplicationRecord
 	end
 
 	private
+		def number_uniqueness_by_user
+			if !Card.where('user_wallet_id = ? and number = ?', self.user_wallet_id, self.number).empty?
+				errors.add(:number, "You already have a card with this number.")
+			end
+		end
+
+		def add_wallet_limit
+			self.user_wallet.add_limit self.limit
+		end
+
+		def remove_wallet_limit
+			self.user_wallet.remove_limit self.limit
+		end
+
 		def set_expiration
 			if expiration_month && expiration_year
 				# sets date to the last day of the chosen month

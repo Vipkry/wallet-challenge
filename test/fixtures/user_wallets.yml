@@ -1,9 +1,9 @@
 one:
-  custom_limit: 9.99
+  custom_limit: 999.99
   user_id: 1
-  limit: 9.99
+  limit: 999.99
 
 two:
-  custom_limit: 9.99
+  custom_limit: 999.99
   user_id: 2
-  limit: 9.99
+  limit: 999.99
