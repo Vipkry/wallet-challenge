@@ -54,10 +54,16 @@ Testes: GREEN
 	-> Parametros: custom_limit
 	-> Retorna: Objeto JSON da wallet
 
+### GET /user_wallets/spend
+	-> Aqui o usuário logado consegue pagar uma compra com sua wallet, utilizando os critérios citados no arquivo de requisitos.
+	-> Header: Authorization
+	-> Parametros: ammount
+	-> Retorna: Objeto JSON da wallet
+
 ### POST /cards/create
 		-> Aqui o usuário logado consegue adicionar um novo cartão à sua wallet. 
 		-> Header: Authorization
-		-> Parametros: card(number, cvv, expiration_year, expiration_month, name, name_written, limit)
+		-> Parametros: card(number, cvv, expiration_year, expiration_month, due_day, name, name_written, limit)
 		Exemplo:  {
 								"card": 
 						      {
@@ -65,8 +71,7 @@ Testes: GREEN
 						      "cvv": "4556",
 						      "expiration_year": "2022", 
 						      "expiration_month": "08",
-						      "due_date_day": "10",
-						      "due_date_month": "09",
+						      "due_day": "10",
 						      "name": "MyDummyCard", 
 						      "name_written": "Justine Henderson", 
 						      "limit": "15000.8" 

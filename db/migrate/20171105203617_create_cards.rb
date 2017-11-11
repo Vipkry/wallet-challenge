@@ -7,6 +7,7 @@ class CreateCards < ActiveRecord::Migration[5.1]
       t.date :expiration_date
       t.integer :user_wallet_id
       t.integer :cvv
+      t.integer :due_day
       t.decimal :spent
       t.decimal :limit
 

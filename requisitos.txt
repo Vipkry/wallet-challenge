@@ -32,10 +32,10 @@ Wallet é a entidade que representa o seu produto. É nela que todos os cartões
 * Uma wallet pode possuir vários cartões (motivo disso tudo) OK 
 * Uma wallet só pode pertencer a um user OK 
 * O limite máximo de uma wallet deve ser a soma de todos os cartões dela  OK
-* O usuário pode setar o limite real da wallet, desde que não ultrapasse o limite máximo 
+* O usuário pode setar o limite real da wallet, desde que não ultrapasse o limite máximo OK
 * Ter a capacidade de adicionar ou remover um cartão a qualquer momento OK
 * O user deve ser capaz de acessar as informações de sua wallet a qualquer momento (limite setado pelo o user, limite máximo e crédito disponível)  OK
-* Executar a ação de uma compra de determinado valor de acordo com as prioridades citadas anteriormente
+* Executar a ação de uma compra de determinado valor de acordo com as prioridades citadas anteriormente  OK
 
 ## Gerenciar um cartão de crédito
 
@@ -43,8 +43,8 @@ O cartão é a entidade que representa o cartão de crédito.
 
 ### Premissas de um cartão
 
-* Possuir as propriedades necessárias para realizar uma compra (número, data de vencimento, data de validade, nome impresso, cvv e limite)
-* Se capaz de liberar crédito (pagar determinado valor na conta do cartão)
+* Possuir as propriedades necessárias para realizar uma compra (número, data de vencimento, data de validade, nome impresso, cvv e limite) OK
+* Se capaz de liberar crédito (pagar determinado valor na conta do cartão) OK
 
 # O que esperamos
 

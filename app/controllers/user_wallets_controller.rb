@@ -6,13 +6,10 @@ class UserWalletsController < ApplicationController
 		user = @current_user
 		
 		wallet = nil
-		wallet = UserWallet.find_by(:user_id => user.id) if user
+		wallet = UserWallet.find_by(:user_id => user.id)
 
-		total_spent = Card.where('user_wallet_id = ?', wallet.id).sum(:spent)
-		credit_available = wallet.custom_limit - total_spent
-		credit_available = 0 if credit_available < 0 # no need to show negative values to users
 		if wallet
-			render json: {custom_limit: wallet.custom_limit, limit: wallet.limit, credit: wallet.custom_limit - total_spent}, status: 200
+			render json: {custom_limit: wallet.custom_limit, limit: wallet.limit, credit: wallet.credit_available}, status: 200
 		else
 			render status: 404
 		end
@@ -23,7 +20,7 @@ class UserWalletsController < ApplicationController
 		user = @current_user
 
 		wallet = nil
-		wallet = UserWallet.find_by(:user_id => user.id) if user
+		wallet = UserWallet.find_by(:user_id => user.id)
 
 		if wallet 
 			@cards = wallet.cards
@@ -50,7 +47,7 @@ class UserWalletsController < ApplicationController
 	def set_custom_limit
 		user = @current_user
 		@wallet = nil
-		@wallet = UserWallet.find_by(:user_id => user.id) if user
+		@wallet = UserWallet.find_by(:user_id => user.id)
 		if @wallet
 			unless params[:custom_limit].nil? || params[:custom_limit].empty?
 				custom_limit = BigDecimal.new(params[:custom_limit])
@@ -66,4 +63,25 @@ class UserWalletsController < ApplicationController
 		end
 	end
 
+	# GET /user_wallets/spend
+	def spend
+		user = @current_user
+		@wallet = nil
+		@wallet = UserWallet.find_by(:user_id => user.id)
+		if @wallet
+			unless params[:ammount].nil? || params[:ammount].empty?
+				ammount = BigDecimal.new(params[:ammount])
+				if((ammount > 0) && (@wallet.spend ammount))
+					@wallet.save
+					render json: @wallet, status: 200
+				else
+					render json: @wallet.errors, status: 400
+				end
+			else
+				render json: {error: "Should have ammount. "}, status: 400
+			end
+		else
+			render status: 404
+		end
+	end
 end
