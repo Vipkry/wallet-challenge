@@ -4,7 +4,7 @@ API em Rails de um sistema de gerenciamento de cartões de crédito
 Ruby version: 2.4.0
 Rails version: 5.1.4
 
-Heroku url: https://wallet-challenge.herokuapp.com/ (atualizado em 11/11/17)
+Heroku url: https://wallet-challenge.herokuapp.com/ (atualizado em 12/11/17)
 
 Testes: GREEN
 
@@ -21,7 +21,6 @@ Testes: GREEN
 ## Problemas / Pendências / Ideias
 
 Tests automatizados podiam ser mais robustos (conter testes mais completos).
-Testes faltando com relação à /user_wallet/spend.
 Melhores atributos para usuários (E-mail, telefone, etc).
 Melhorar performance de algumas requisições usando triggers no banco de dados.
 
