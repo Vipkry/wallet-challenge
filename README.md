@@ -9,8 +9,8 @@ Heroku url: https://wallet-challenge.herokuapp.com/ (atualizado em 11/11/17)
 Testes: GREEN
 
 ## Como usar
-
-	Execute localmente usando 'rails server'.
+	
+	Após ter instalado Ruby e Ruby on Rails, execute localmente usando 'rails server'.
 	Verifique a porta que o servidor vai utilizar (3000 se você não tiver feito nenhuma alteração)
 	e você pode acessar por localhost:3000/ (mantive a página padrão "You're on rails")
 
