@@ -18,6 +18,14 @@ Testes: GREEN
 
 	Todos parametros de requisição assim como de resposta são esperados em JSON
 
+## Problemas / Pendências / Ideias
+
+Tests automatizados podiam ser mais robustos (conter testes mais completos).
+Testes faltando com relação à /user_wallet/spend.
+Melhores atributos para usuários (E-mail, telefone, etc).
+Melhorar performance de algumas requisições usando triggers no banco de dados.
+
+
 ### POST /users/create
 	-> Aqui você consegue criar um novo usuário. (obs: id_nat é o CPF)
 	-> Parametros: user(name, password, password_confirmation, id_nat) (Ex: '{"user": {"name": "Gustavo", "id_nat": "12345678901", "password": "123", "password_confirmation": "123"}}')
