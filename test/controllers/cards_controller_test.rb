@@ -21,7 +21,7 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
   test "should create valid card" do
   	card = cards(:real)
     initial_limit = UserWallet.find_by(:user_id => users(:wallet_user).id).limit
-  	post cards_create_url, params: {card: { number: card.number,
+  	post cards_create_url, params: {card: { number: card.number + "123",
                     											 cvv: card.cvv,
                     											 expiration_year: '2020',
                     											 expiration_month: '08',

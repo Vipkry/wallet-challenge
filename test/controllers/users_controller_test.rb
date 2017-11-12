@@ -4,14 +4,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create user" do
     assert_difference('User.count') do
-    	post users_create_url, params: {user: { name: 'Kerrigan', password: '1234567890', id_nat: '17915160419' }}
+    	post users_create_url, params: {user: { name: 'Kerrigan', password: '1234567890', password_confirmation: '1234567890', id_nat: '17915160419' }}
     end
 
     assert_response 201
   end
 
   test "should have a wallet" do
-    post users_create_url, params: {user: { name: 'Kerrigan', password: '1234567890', id_nat: '12345678900' }}
+    post users_create_url, params: {user: { name: 'Kerrigan', password: '1234567890', password_confirmation: '1234567890', id_nat: '12345678900' }}
     
     wallet_id = User.last.user_wallet.id
 
@@ -20,15 +20,15 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "return unprocessable entity upon error" do
     # password souln't be blank
-  	post users_create_url, params: {user: { name: 'Kerrigan', password: '', id_nat: '17915160419' }}
+  	post users_create_url, params: {user: { name: 'Kerrigan', password: '', password_confirmation: '', id_nat: '17915160419' }}
     assert_response 422, "Didn't receive error header on invalid user request (no password)"
     
     # name shouldn't be blank?
-    post users_create_url, params: {user: { name: '', password: '123123123', id_nat: '17915160419' }}
+    post users_create_url, params: {user: { name: '', password: '123123123', password_confirmation: '123123123', id_nat: '17915160419' }}
     assert_response 422, "Didn't receive error header on invalid user request (no name)"
     
     # id_nat shouldn't be blank?
-    post users_create_url, params: {user: { name: 'Kerrigan', password: '123123123', id_nat: '' }}
+    post users_create_url, params: {user: { name: 'Kerrigan', password: '123123123', password_confirmation: '123123123', id_nat: '' }}
     assert_response 422, "Didn't receive error header on invalid user request (no id_nat)"
   end
 

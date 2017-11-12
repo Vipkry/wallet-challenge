@@ -70,7 +70,8 @@ class UserWallet < ApplicationRecord
 				if winners.length > 1
 					# === Choose the winner ===
 					winners.each do |card|
-						if winner.limit - winner.spent < card.limit - card.spent
+						# less limit wins the draw
+						if winner.limit > card.limit
 							winner = card
 						end
 					end

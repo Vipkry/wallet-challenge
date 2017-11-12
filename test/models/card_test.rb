@@ -20,7 +20,7 @@ class CardTest < ActiveSupport::TestCase
 
   test "should have multiple invalid cards" do
   	@card.save!
-    card = Card.new(number: @card.number,
+    card = Card.new(number: @card.number + "1",
                  cvv: @card.cvv, 
                  expiration_year: '2020', 
                  expiration_month: '08', 

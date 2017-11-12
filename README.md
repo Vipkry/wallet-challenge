@@ -4,19 +4,27 @@ API em Rails de um sistema de gerenciamento de cartões de crédito
 Ruby version: 2.4.0
 Rails version: 5.1.4
 
-Heroku url: https://wallet-challenge.herokuapp.com/ (atualizado em 08/11/17)
+Heroku url: https://wallet-challenge.herokuapp.com/ (atualizado em 11/11/17)
 
 Testes: GREEN
 
 ## Como usar
-
-	Execute localmente usando 'rails server'.
+	
+	Após ter instalado Ruby e Ruby on Rails, execute localmente usando 'rails server'.
 	Verifique a porta que o servidor vai utilizar (3000 se você não tiver feito nenhuma alteração)
 	e você pode acessar por localhost:3000/ (mantive a página padrão "You're on rails")
 
 	Obs: Use 'rails server -b $IP -p $PORT' se estiver usando a cloud9 IDE
 
 	Todos parametros de requisição assim como de resposta são esperados em JSON
+
+## Problemas / Pendências / Ideias
+
+Tests automatizados podiam ser mais robustos (conter testes mais completos).
+Testes faltando com relação à /user_wallet/spend.
+Melhores atributos para usuários (E-mail, telefone, etc).
+Melhorar performance de algumas requisições usando triggers no banco de dados.
+
 
 ### POST /users/create
 	-> Aqui você consegue criar um novo usuário. (obs: id_nat é o CPF)

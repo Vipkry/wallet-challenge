@@ -78,7 +78,7 @@ class UserWalletsControllerTest < ActionDispatch::IntegrationTest
                  expiration_year: '2020', 
                  expiration_month: '08', 
                  due_day: '20',
-                 limit: card.limit,
+                 limit: 1000,
                  name: card.name,
                  name_written: card.name_written,
                  user_wallet_id: users(:wallet_user).user_wallet.id)
@@ -97,6 +97,63 @@ class UserWalletsControllerTest < ActionDispatch::IntegrationTest
         assert_response 200
       end     
     end
+    
+    @card2 = Card.create!(number: card.number + "123",
+                 cvv: card.cvv,
+                 expiration_year: '2020', 
+                 expiration_month: '08', 
+                 due_day: '20',
+                 limit: 100,
+                 name: card.name,
+                 name_written: card.name_written,
+                 user_wallet_id: users(:wallet_user).user_wallet.id)
+                 
+    @card3 = Card.create!(number: card.number + "1234",
+               cvv: card.cvv,
+               expiration_year: '2020', 
+               expiration_month: '08', 
+               due_day: '30',
+               limit: 250,
+               name: card.name,
+               name_written: card.name_written,
+               user_wallet_id: users(:wallet_user).user_wallet.id) 
+               
+    #test the case where it should use more than one card to complete the purchase
+    # Testing with 3 cards. 
+    # card1: An existing one, spent: 200
+    # card2: A new one, spent: 0, less limit
+    # card3: A second new one, spent: 0, but its due_day is furtherer (meaning that it should have priority)
+    
+    # Test: further due_day wins
+    # Test: limit wins the draw
+    # Test: divide purchase in more than one card
+    
+    # further due_day should wins
+    travel_to(Date.new(2020, 8, 1)) do 
+      post users_login_url, params: {id_nat: users(:wallet_user).id_nat, password: 'foobar'}
+      token = JSON.parse(@response.body)['auth_token']
+
+      assert_difference("Card.find(@card3.id).spent", @card3.limit) do
+        get user_wallets_spend_url, params: {ammount: @card3.limit}, headers: {'Authorization' => token}
+        assert_response 200
+      end
+      
+      # less limit (card2) wins the draw (should have the draw now that we spent everything on card3)
+      assert_difference("Card.find(@card2.id).spent", 50) do
+        get user_wallets_spend_url, params: {ammount: 50}, headers: {'Authorization' => token}
+        assert_response 200
+      end
+      
+      # spent the rest of card2 is capable of and then keep spending at card1
+      assert_difference("Card.find(@card.id).spent", 350) do
+        assert_difference("Card.find(@card2.id).spent", 50) do
+          get user_wallets_spend_url, params: {ammount: 400}, headers: {'Authorization' => token}
+          assert_response 200
+        end
+      end
+    end
+    
+    
   end
 
   test "should not have ok at spend" do
@@ -120,6 +177,5 @@ class UserWalletsControllerTest < ActionDispatch::IntegrationTest
       
     get user_wallets_spend_url, params: {ammount: @card.limit + 1}
     assert_response 401
-   
   end
 end
