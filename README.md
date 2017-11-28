@@ -31,7 +31,7 @@ Melhorar performance de algumas requisições usando triggers no banco de dados.
 	-> Retorna: O objeto JSON do usuário criado (HTTP 200) ou com o erro de criação caso haja um (HTTP 422).
 
 ### POST /users/login
-	-> Retorna o token de login do usuário (caso haja sucesso na autenticação) junto com o id do usuário. Use o token para manipular o restante da API como o usuário correto logado. (Incluindo
+	-> Retorna o token de login do usuário (caso haja sucesso na autenticação). Use o token para manipular o restante da API como o usuário correto logado. (Incluindo
 		o token no header 'Authorization')
 	-> Parametros: id_nat, password 
 	-> Retorna: auth_token
